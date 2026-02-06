@@ -21,21 +21,27 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity<List<ErrorMessageDto>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        List<ErrorMessageDto> dto = new ArrayList<>();
+    public ResponseEntity<List<ValidationErrorMessageDto>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        List<ValidationErrorMessageDto> dto = new ArrayList<>();
 
         e.getBindingResult().getFieldErrors().forEach(err -> {
             String message = messageSource.getMessage(err, LocaleContextHolder.getLocale());
-            ErrorMessageDto error =  new ErrorMessageDto(message, err.getField());
+            ValidationErrorMessageDto error =  new ValidationErrorMessageDto(message, err.getField());
             dto.add(error);
         });
 
         return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = UserAlreadyExistsException.class)
-    public ResponseEntity<ErrorMessageDto> handleUserAlreadyExistsException(UserAlreadyExistsException e) {
-        ErrorMessageDto message = new ErrorMessageDto(e.getMessage(), "email");
-        return ResponseEntity.badRequest().body(message);
+    @ExceptionHandler(value = AlreadyExistsException.class)
+    public ResponseEntity<ErrorMessageDto> handleUserAlreadyExistsException(AlreadyExistsException e) {
+        ErrorMessageDto error = new ErrorMessageDto(HttpStatus.BAD_REQUEST, e.getMessage());
+        return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(value = NotFoundException.class)
+    public ResponseEntity<ErrorMessageDto> handleUserNotFoundException(NotFoundException e) {
+        ErrorMessageDto error = new ErrorMessageDto(HttpStatus.NOT_FOUND, e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }

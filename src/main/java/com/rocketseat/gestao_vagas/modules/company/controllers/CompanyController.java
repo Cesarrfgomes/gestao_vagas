@@ -1,0 +1,46 @@
+package com.rocketseat.gestao_vagas.modules.company.controllers;
+
+import com.rocketseat.gestao_vagas.exceptions.AlreadyExistsException;
+import com.rocketseat.gestao_vagas.modules.company.entities.CompanyEntity;
+import com.rocketseat.gestao_vagas.modules.company.entities.JobEntity;
+import com.rocketseat.gestao_vagas.modules.company.use_cases.CreateCompanyUseCase;
+import com.rocketseat.gestao_vagas.modules.company.use_cases.CreateJobUseCase;
+import com.rocketseat.gestao_vagas.modules.company.use_cases.FindCompanyById;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/company")
+public class CompanyController {
+    @Autowired
+    private CreateCompanyUseCase createCompanyUseCase;
+
+    @Autowired
+    private FindCompanyById  findCompanyById;
+
+    @Autowired
+    private CreateJobUseCase createJobUseCase;
+
+
+    @PostMapping
+    public ResponseEntity<CompanyEntity> create(@Valid @RequestBody CompanyEntity companyEntity) throws AlreadyExistsException {
+        var result = this.createCompanyUseCase.execute(companyEntity);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
+    @PostMapping("/job")
+    public ResponseEntity<JobEntity> createJob(@Valid @RequestBody JobEntity jobEntity) {
+        this.findCompanyById.execute(jobEntity.getCompanyId());
+
+        var result =  this.createJobUseCase.execute(jobEntity);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+}
