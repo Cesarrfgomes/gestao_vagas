@@ -1,3 +1,10 @@
 spring:
   application:
     name: gestao_vagas
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/gestao_vagas"
+    username: ${PG_USER}
+    password: ${PG_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
