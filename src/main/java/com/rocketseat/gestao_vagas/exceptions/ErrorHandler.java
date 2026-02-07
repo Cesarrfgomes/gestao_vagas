@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,4 +45,11 @@ public class ErrorHandler {
         ErrorMessageDto error = new ErrorMessageDto(HttpStatus.NOT_FOUND, e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    public ResponseEntity<ErrorMessageDto> handleAuthenticationException(AuthenticationException e) {
+        ErrorMessageDto error = new ErrorMessageDto(HttpStatus.UNAUTHORIZED, e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
 }
