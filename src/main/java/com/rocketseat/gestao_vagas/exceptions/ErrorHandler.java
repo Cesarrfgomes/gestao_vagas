@@ -1,5 +1,6 @@
 package com.rocketseat.gestao_vagas.exceptions;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,12 @@ public class ErrorHandler {
 
     @ExceptionHandler(value = AuthenticationException.class)
     public ResponseEntity<ErrorMessageDto> handleAuthenticationException(AuthenticationException e) {
+        ErrorMessageDto error = new ErrorMessageDto(HttpStatus.UNAUTHORIZED, e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
+    @ExceptionHandler(value = JWTVerificationException.class)
+    public ResponseEntity<ErrorMessageDto> handleJWTVerificationException(JWTVerificationException e) {
         ErrorMessageDto error = new ErrorMessageDto(HttpStatus.UNAUTHORIZED, e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
