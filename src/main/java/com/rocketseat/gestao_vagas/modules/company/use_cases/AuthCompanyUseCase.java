@@ -6,6 +6,7 @@ import com.rocketseat.gestao_vagas.exceptions.NotFoundException;
 import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyDto;
 import com.rocketseat.gestao_vagas.modules.company.entities.CompanyEntity;
 import com.rocketseat.gestao_vagas.modules.company.repositories.CompanyRepository;
+import com.rocketseat.gestao_vagas.providers.JWTProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,8 +19,8 @@ import java.time.Instant;
 @Service
 public class AuthCompanyUseCase {
 
-    @Value("${security.token.secret}")
-    private String secretKey;
+    @Autowired
+    private JWTProvider jwtProvider;
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -38,15 +39,7 @@ public class AuthCompanyUseCase {
             throw new AuthenticationException("Credenciais incorretas.");
         }
 
-        System.out.printf(secretKey);
-
-        Algorithm algorithm = Algorithm.HMAC256(secretKey);
-
-        return JWT.create()
-                .withIssuer("javagas")
-                .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
-                .withSubject(company.getId().toString())
-                .sign(algorithm);
+        return jwtProvider.generateToken(company);
     }
 
 }
