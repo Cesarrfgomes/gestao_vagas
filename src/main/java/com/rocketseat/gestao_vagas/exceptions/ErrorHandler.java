@@ -48,8 +48,8 @@ public class ErrorHandler {
 
     @ExceptionHandler(value = AuthenticationException.class)
     public ResponseEntity<ErrorMessageDto> handleAuthenticationException(AuthenticationException e) {
-        ErrorMessageDto error = new ErrorMessageDto(HttpStatus.UNAUTHORIZED, e.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+        ErrorMessageDto error = new ErrorMessageDto(HttpStatus.FORBIDDEN, e.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
 
 }
