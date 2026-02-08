@@ -39,7 +39,7 @@ public class AuthCompanyUseCase {
             throw new AuthenticationException("Credenciais incorretas.");
         }
 
-        return jwtProvider.generateToken(company);
+        return jwtProvider.generateCompanyToken(company);
     }
 
 }

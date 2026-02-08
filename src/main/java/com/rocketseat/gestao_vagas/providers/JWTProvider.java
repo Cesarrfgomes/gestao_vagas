@@ -2,7 +2,9 @@ package com.rocketseat.gestao_vagas.providers;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.rocketseat.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import com.rocketseat.gestao_vagas.modules.company.entities.CompanyEntity;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +19,31 @@ public class JWTProvider {
 
     private Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
+    @PostConstruct
+    public void setUp() {
+        this.algorithm = Algorithm.HMAC256(secretKey);
+    }
+
     public String validateToken(String token) {
         token = token.replace("Bearer ", "");
 
         return  JWT.require(algorithm).build().verify(token).getSubject();
     }
 
-    public String generateToken(CompanyEntity company) {
+    private String generateToken(String subject) {
          return JWT.create()
                 .withIssuer("javagas")
                 .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
-                .withSubject(company.getId().toString())
+                .withSubject(subject)
                 .sign(algorithm);
     }
+
+    public String generateCompanyToken(CompanyEntity company) {
+        return generateToken(company.getId().toString());
+    }
+
+    public String generateCandidateToken(CandidateEntity candidate) {
+        return generateToken(candidate.getId().toString());
+    }
+
 }
