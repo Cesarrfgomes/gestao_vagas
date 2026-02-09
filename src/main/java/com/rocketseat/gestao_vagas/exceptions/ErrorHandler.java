@@ -1,6 +1,7 @@
 package com.rocketseat.gestao_vagas.exceptions;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -55,7 +56,13 @@ public class ErrorHandler {
 
     @ExceptionHandler(value = JWTVerificationException.class)
     public ResponseEntity<ErrorMessageDto> handleJWTVerificationException(JWTVerificationException e) {
-        ErrorMessageDto error = new ErrorMessageDto(HttpStatus.UNAUTHORIZED, e.getMessage());
+        ErrorMessageDto error = new ErrorMessageDto(HttpStatus.UNAUTHORIZED, "Token Inválido.");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
+    @ExceptionHandler(value = TokenExpiredException.class)
+    public ResponseEntity<ErrorMessageDto> handleTokenExpiredException(TokenExpiredException e) {
+        ErrorMessageDto error = new ErrorMessageDto(HttpStatus.UNAUTHORIZED, "Token expirado.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 

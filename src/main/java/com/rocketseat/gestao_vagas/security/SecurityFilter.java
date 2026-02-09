@@ -1,5 +1,6 @@
 package com.rocketseat.gestao_vagas.security;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.rocketseat.gestao_vagas.providers.JWTProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,7 +22,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private JWTProvider jwtProvider;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, TokenExpiredException {
         SecurityContextHolder.getContext().setAuthentication(null);
 
         String header = request.getHeader("Authorization");
