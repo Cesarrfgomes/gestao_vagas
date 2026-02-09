@@ -6,6 +6,7 @@ import com.rocketseat.gestao_vagas.modules.candidate.use_cases.AuthCandidateUseC
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ public class AuthCandidateController {
     private AuthCandidateUseCase authCandidateUseCase;
 
     @PostMapping("/candidate")
-    public ResponseEntity<AuthCandidateResponseDto> create (AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException {
+    public ResponseEntity<AuthCandidateResponseDto> create(@RequestBody AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException {
         String token = this.authCandidateUseCase.execute(authCandidateRequestDto);
 
         return ResponseEntity.ok(new AuthCandidateResponseDto(token));
