@@ -16,15 +16,13 @@ import java.time.Instant;
 @Service
 public class JWTProvider {
 
-    @Value("${security.token.secret}")
-    private String secretKey;
+    @Value("${security.token.secret.company}")
+    private String companySecretKey;
+
+    @Value("${security.token.secret.candidate}")
+    private String candidateSecretKey;
 
     private Algorithm algorithm;
-
-    @PostConstruct
-    public void setUp() {
-        this.algorithm = Algorithm.HMAC256(secretKey);
-    }
 
     public String validateToken(String token) throws TokenExpiredException {
         token = token.replace("Bearer ", "");
@@ -32,7 +30,7 @@ public class JWTProvider {
         return  JWT.require(algorithm).build().verify(token).getSubject();
     }
 
-    private String generateToken(String subject) {
+    private String generateToken(String subject, Algorithm algorithm) throws TokenExpiredException {
          return JWT.create()
                 .withIssuer("javagas")
                 .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
@@ -41,11 +39,13 @@ public class JWTProvider {
     }
 
     public String generateCompanyToken(CompanyEntity company) {
-        return generateToken(company.getId().toString());
+        this.algorithm = Algorithm.HMAC256(companySecretKey);
+        return generateToken(company.getId().toString(), algorithm);
     }
 
     public String generateCandidateToken(CandidateEntity candidate) {
-        return generateToken(candidate.getId().toString());
+        this.algorithm = Algorithm.HMAC256(candidateSecretKey);
+        return generateToken(candidate.getId().toString(),  algorithm);
     }
 
 }

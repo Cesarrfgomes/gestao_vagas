@@ -11,4 +11,6 @@ spring:
 
 security:
   token:
-    secret: ${SECRET_KEY}
+    secret:
+      company: ${SECRET_KEY_COMPANY}
+      candidate: ${SECRET_KEY_CANDIDATE}

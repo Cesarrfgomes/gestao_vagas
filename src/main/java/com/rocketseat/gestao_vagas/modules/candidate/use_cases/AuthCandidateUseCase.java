@@ -23,10 +23,10 @@ public class AuthCandidateUseCase {
 
 
     public String execute(AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException {
-        var candidate = this.candidateRepository.findByUsername(authCandidateRequestDto.getUsername())
+        var candidate = this.candidateRepository.findByUsername(authCandidateRequestDto.username())
                 .orElseThrow(() -> new AuthenticationException("Credenciais incorretas."));
 
-        var doesPasswordMatches = this.passwordEncoder.matches(authCandidateRequestDto.getPassword(), candidate.getPassword());
+        var doesPasswordMatches = this.passwordEncoder.matches(authCandidateRequestDto.password(), candidate.getPassword());
 
         if(!doesPasswordMatches){
             throw new AuthenticationException("Credenciais incorretas.");
