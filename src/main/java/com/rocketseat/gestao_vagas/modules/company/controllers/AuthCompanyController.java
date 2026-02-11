@@ -20,7 +20,7 @@ public class AuthCompanyController {
     private AuthCompanyUseCase authCompanyUseCase;
 
     @PostMapping("/company")
-    public ResponseEntity<AuthCompanyResponseDto> create(@RequestBody AuthCompanyDto authCompanyDto) throws AuthenticationException {
+    public ResponseEntity<AuthCompanyResponseDto> auth(@RequestBody AuthCompanyDto authCompanyDto) throws AuthenticationException {
         String token = this.authCompanyUseCase.execute(authCompanyDto);
 
         return ResponseEntity.ok(new AuthCompanyResponseDto(token));

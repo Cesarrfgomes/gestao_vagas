@@ -19,9 +19,9 @@ public class AuthCandidateController {
     private AuthCandidateUseCase authCandidateUseCase;
 
     @PostMapping("/candidate")
-    public ResponseEntity<AuthCandidateResponseDto> create(@RequestBody AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException {
-        String token = this.authCandidateUseCase.execute(authCandidateRequestDto);
+    public ResponseEntity<AuthCandidateResponseDto> auth(@RequestBody AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException {
+        AuthCandidateResponseDto token = this.authCandidateUseCase.execute(authCandidateRequestDto);
 
-        return ResponseEntity.ok(new AuthCandidateResponseDto(token));
+        return ResponseEntity.ok(token);
     }
 }
