@@ -3,6 +3,8 @@ package com.rocketseat.gestao_vagas.modules.candidate.controllers;
 import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDto;
 import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDto;
 import com.rocketseat.gestao_vagas.modules.candidate.use_cases.AuthCandidateUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +16,13 @@ import javax.naming.AuthenticationException;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Candidato")
 public class AuthCandidateController {
     @Autowired
     private AuthCandidateUseCase authCandidateUseCase;
 
     @PostMapping("/candidate")
+    @Operation(summary = "Autenticação do candidadto")
     public ResponseEntity<AuthCandidateResponseDto> auth(@RequestBody AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException {
         AuthCandidateResponseDto token = this.authCandidateUseCase.execute(authCandidateRequestDto);
 

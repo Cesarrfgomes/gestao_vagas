@@ -8,6 +8,8 @@ import com.rocketseat.gestao_vagas.modules.company.entities.JobEntity;
 import com.rocketseat.gestao_vagas.modules.company.use_cases.CreateCompanyUseCase;
 import com.rocketseat.gestao_vagas.modules.company.use_cases.CreateJobUseCase;
 import com.rocketseat.gestao_vagas.modules.company.use_cases.FindCompanyById;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +25,17 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/company")
+@Tag(name = "Empresa")
 public class CompanyController {
     @Autowired
     private CreateCompanyUseCase createCompanyUseCase;
-
-    @Autowired
-    private FindCompanyById findCompanyById;
 
     @Autowired
     private CreateJobUseCase createJobUseCase;
 
 
     @PostMapping
+    @Operation(summary = "Cadastro de empresas")
     public ResponseEntity<CompanyEntity> create(@Valid @RequestBody CompanyEntity companyEntity) throws AlreadyExistsException {
         var result = this.createCompanyUseCase.execute(companyEntity);
 
@@ -43,6 +44,7 @@ public class CompanyController {
 
     @PostMapping("/job")
     @PreAuthorize("hasRole('COMPANY')")
+    @Operation(summary = "Cadastro de vagas")
     public ResponseEntity<JobEntity> createJob(@Valid @RequestBody CreateJobDto jobDto, HttpServletRequest request) throws TokenExpiredException {
         var companyId = request.getAttribute("company_id");
 
