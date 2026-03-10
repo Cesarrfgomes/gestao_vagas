@@ -41,22 +41,4 @@ public class CompanyController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
-
-    @PostMapping("/job")
-    @PreAuthorize("hasRole('COMPANY')")
-    @Operation(summary = "Cadastro de vagas")
-    public ResponseEntity<JobEntity> createJob(@Valid @RequestBody CreateJobDto jobDto, HttpServletRequest request) throws TokenExpiredException {
-        var companyId = request.getAttribute("company_id");
-
-        var jobEntity = JobEntity.builder()
-                .description(jobDto.getDescription())
-                .benefits(jobDto.getBenefits())
-                .level(jobDto.getLevel())
-                .companyId(UUID.fromString(companyId.toString()))
-                .build();
-
-        var result = this.createJobUseCase.execute(jobEntity);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
-    }
 }
