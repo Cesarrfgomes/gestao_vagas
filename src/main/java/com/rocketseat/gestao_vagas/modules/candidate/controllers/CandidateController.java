@@ -1,6 +1,7 @@
 package com.rocketseat.gestao_vagas.modules.candidate.controllers;
 
 import com.rocketseat.gestao_vagas.exceptions.AlreadyExistsException;
+import com.rocketseat.gestao_vagas.exceptions.ErrorMessageDto;
 import com.rocketseat.gestao_vagas.exceptions.NotFoundException;
 import com.rocketseat.gestao_vagas.modules.candidate.dto.GetCandidateProfileResponseDto;
 import com.rocketseat.gestao_vagas.modules.candidate.entities.CandidateEntity;
@@ -60,11 +61,15 @@ public class CandidateController {
     @GetMapping("/profile")
     @PreAuthorize("hasRole('CANDIDATE')")
     @Operation(summary = "Detalha o perfil do usuário", description = "Detalha o perfil do usuário logado")
-    @ApiResponses({
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = GetCandidateProfileResponseDto.class) )
+                    @Content(schema = @Schema(implementation = GetCandidateProfileResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "400", content = {
+                    @Content(schema = @Schema(implementation = ErrorMessageDto.class))
             })
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<GetCandidateProfileResponseDto> getProfile(HttpServletRequest request) throws NotFoundException {
         var candidateId = request.getAttribute("candidate_id");
 

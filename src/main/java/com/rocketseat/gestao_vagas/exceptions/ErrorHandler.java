@@ -17,7 +17,7 @@ import java.util.List;
 @ControllerAdvice
 public class ErrorHandler {
 
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     public ErrorHandler(MessageSource messageSource) {
         this.messageSource = messageSource;

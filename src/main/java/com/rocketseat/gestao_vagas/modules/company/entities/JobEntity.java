@@ -1,5 +1,6 @@
 package com.rocketseat.gestao_vagas.modules.company.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,8 @@ public class JobEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Schema(example = "Vaga para desenvolvedor")
     private String description;
     private String benefits;
     @NotBlank(message = "O nível da vaga deve ser preenchido.")
