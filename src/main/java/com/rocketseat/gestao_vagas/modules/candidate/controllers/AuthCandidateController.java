@@ -14,18 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.naming.AuthenticationException;
 
-@RestController
 @RequestMapping("/auth")
 @Tag(name = "Candidato")
-public class AuthCandidateController {
-    @Autowired
-    private AuthCandidateUseCase authCandidateUseCase;
-
+public interface AuthCandidateController {
     @PostMapping("/candidate")
     @Operation(summary = "Autenticação do candidadto")
-    public ResponseEntity<AuthCandidateResponseDto> auth(@RequestBody AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException {
-        AuthCandidateResponseDto token = this.authCandidateUseCase.execute(authCandidateRequestDto);
-
-        return ResponseEntity.ok(token);
-    }
+    ResponseEntity<AuthCandidateResponseDto> auth(@RequestBody AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException ;
 }
