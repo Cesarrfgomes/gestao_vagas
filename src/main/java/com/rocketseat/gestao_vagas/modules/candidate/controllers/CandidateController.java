@@ -4,10 +4,8 @@ import com.rocketseat.gestao_vagas.exceptions.AlreadyExistsException;
 import com.rocketseat.gestao_vagas.exceptions.ErrorMessageDto;
 import com.rocketseat.gestao_vagas.exceptions.NotFoundException;
 import com.rocketseat.gestao_vagas.modules.candidate.dto.GetCandidateProfileResponseDto;
+import com.rocketseat.gestao_vagas.modules.candidate.entities.ApplyJobEntity;
 import com.rocketseat.gestao_vagas.modules.candidate.entities.CandidateEntity;
-import com.rocketseat.gestao_vagas.modules.candidate.use_cases.CreateCandidateUseCase;
-import com.rocketseat.gestao_vagas.modules.candidate.use_cases.GetCandidateProfileUseCase;
-import com.rocketseat.gestao_vagas.modules.candidate.use_cases.ListAllJobsByFilterUseCase;
 import com.rocketseat.gestao_vagas.modules.company.entities.JobEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -19,11 +17,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,7 +45,7 @@ public interface CandidateController {
             })
     })
     @SecurityRequirement(name = "jwt_auth")
-    ResponseEntity<GetCandidateProfileResponseDto> getProfile(HttpServletRequest request) throws NotFoundException ;
+    ResponseEntity<GetCandidateProfileResponseDto> getProfile(HttpServletRequest request) throws NotFoundException;
 
     @GetMapping("/job")
     @PreAuthorize("hasRole('CANDIDATE')")
@@ -61,5 +56,12 @@ public interface CandidateController {
             })
     })
     @SecurityRequirement(name = "jwt_auth")
-    ResponseEntity<List<JobEntity>> listAllJobsByFilter(@RequestParam(value = "q") String filter) ;
+    ResponseEntity<List<JobEntity>> listAllJobsByFilter(@RequestParam(value = "q") String filter);
+
+
+    @PostMapping("/job/apply")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    @Operation(summary = "Inscrição do candidato para uma vaga", description = "Essa função é responsável por realizar a inscrição do cancidato em uma vaga.")
+    @SecurityRequirement(name = "jwt_auth")
+    ResponseEntity<ApplyJobEntity> applyJob(HttpServletRequest request, @RequestBody UUID jobId) throws NotFoundException;
 }

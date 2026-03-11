@@ -3,7 +3,9 @@ package com.rocketseat.gestao_vagas.modules.candidate.controllers;
 import com.rocketseat.gestao_vagas.exceptions.AlreadyExistsException;
 import com.rocketseat.gestao_vagas.exceptions.NotFoundException;
 import com.rocketseat.gestao_vagas.modules.candidate.dto.GetCandidateProfileResponseDto;
+import com.rocketseat.gestao_vagas.modules.candidate.entities.ApplyJobEntity;
 import com.rocketseat.gestao_vagas.modules.candidate.entities.CandidateEntity;
+import com.rocketseat.gestao_vagas.modules.candidate.use_cases.ApplyJobCandidateUseCase;
 import com.rocketseat.gestao_vagas.modules.candidate.use_cases.CreateCandidateUseCase;
 import com.rocketseat.gestao_vagas.modules.candidate.use_cases.GetCandidateProfileUseCase;
 import com.rocketseat.gestao_vagas.modules.candidate.use_cases.ListAllJobsByFilterUseCase;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,6 +31,9 @@ public class CandidateControllerImpl implements CandidateController {
 
     @Autowired
     private ListAllJobsByFilterUseCase listAllJobsByFilterUseCase;
+
+    @Autowired
+    private ApplyJobCandidateUseCase applyJobCandidateUseCase;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -55,6 +61,15 @@ public class CandidateControllerImpl implements CandidateController {
     @Override
     public ResponseEntity<List<JobEntity>> listAllJobsByFilter(String filter) {
         var result = this.listAllJobsByFilterUseCase.execute(filter);
+
+        return ResponseEntity.ok(result);
+    }
+
+    @Override
+    public ResponseEntity<ApplyJobEntity> applyJob(HttpServletRequest request, @RequestBody UUID jobId) throws NotFoundException {
+        var candidateId = request.getAttribute("candidate_id");
+
+        var result = this.applyJobCandidateUseCase.execute(UUID.fromString(candidateId.toString()), jobId);
 
         return ResponseEntity.ok(result);
     }
