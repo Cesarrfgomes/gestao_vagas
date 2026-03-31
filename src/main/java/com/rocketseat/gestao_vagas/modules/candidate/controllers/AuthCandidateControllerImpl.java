@@ -1,7 +1,7 @@
 package com.rocketseat.gestao_vagas.modules.candidate.controllers;
 
-import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDto;
-import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDto;
+import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
+import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDTO;
 import com.rocketseat.gestao_vagas.modules.candidate.use_cases.AuthCandidateUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +16,8 @@ public class AuthCandidateControllerImpl implements AuthCandidateController {
     private AuthCandidateUseCase authCandidateUseCase;
 
     @Override
-    public ResponseEntity<AuthCandidateResponseDto> auth(AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException {
-        AuthCandidateResponseDto token = this.authCandidateUseCase.execute(authCandidateRequestDto);
+    public ResponseEntity<AuthCandidateResponseDTO> auth(AuthCandidateRequestDTO authCandidateRequestDto) throws AuthenticationException {
+        AuthCandidateResponseDTO token = this.authCandidateUseCase.execute(authCandidateRequestDto);
 
         return ResponseEntity.ok(token);
     }

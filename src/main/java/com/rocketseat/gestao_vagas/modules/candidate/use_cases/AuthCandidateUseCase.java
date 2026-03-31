@@ -1,7 +1,7 @@
 package com.rocketseat.gestao_vagas.modules.candidate.use_cases;
 
-import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDto;
-import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDto;
+import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
+import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDTO;
 import com.rocketseat.gestao_vagas.modules.candidate.repositories.CandidateRepository;
 import com.rocketseat.gestao_vagas.providers.JWTProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class AuthCandidateUseCase {
     private JWTProvider jwtProvider;
 
 
-    public AuthCandidateResponseDto execute(AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException {
+    public AuthCandidateResponseDTO execute(AuthCandidateRequestDTO authCandidateRequestDto) throws AuthenticationException {
         var candidate = this.candidateRepository.findByUsername(authCandidateRequestDto.username())
                 .orElseThrow(() -> new AuthenticationException("Credenciais incorretas."));
 
@@ -42,7 +42,7 @@ public class AuthCandidateUseCase {
 
         var token = this.jwtProvider.generateCandidateToken(candidate, expiresIn);
 
-        var authCandidateResponse = AuthCandidateResponseDto
+        var authCandidateResponse = AuthCandidateResponseDTO
                 .builder()
                 .accessToken(token)
                 .expiresIn(twoHours.toSeconds())

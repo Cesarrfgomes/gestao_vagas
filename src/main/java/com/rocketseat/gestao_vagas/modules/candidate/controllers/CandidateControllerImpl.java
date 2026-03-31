@@ -2,7 +2,7 @@ package com.rocketseat.gestao_vagas.modules.candidate.controllers;
 
 import com.rocketseat.gestao_vagas.exceptions.AlreadyExistsException;
 import com.rocketseat.gestao_vagas.exceptions.NotFoundException;
-import com.rocketseat.gestao_vagas.modules.candidate.dto.GetCandidateProfileResponseDto;
+import com.rocketseat.gestao_vagas.modules.candidate.dto.GetCandidateProfileResponseDTO;
 import com.rocketseat.gestao_vagas.modules.candidate.entities.ApplyJobEntity;
 import com.rocketseat.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import com.rocketseat.gestao_vagas.modules.candidate.use_cases.ApplyJobCandidateUseCase;
@@ -50,10 +50,10 @@ public class CandidateControllerImpl implements CandidateController {
     }
 
     @Override
-    public ResponseEntity<GetCandidateProfileResponseDto> getProfile(HttpServletRequest request) throws NotFoundException {
+    public ResponseEntity<GetCandidateProfileResponseDTO> getProfile(HttpServletRequest request) throws NotFoundException {
         var candidateId = request.getAttribute("candidate_id");
 
-        GetCandidateProfileResponseDto candidate = this.getCandidateProfileUseCase.execute(UUID.fromString(candidateId.toString()));
+        GetCandidateProfileResponseDTO candidate = this.getCandidateProfileUseCase.execute(UUID.fromString(candidateId.toString()));
 
         return ResponseEntity.ok(candidate);
     }

@@ -1,6 +1,6 @@
 package com.rocketseat.gestao_vagas.modules.company.use_cases;
 
-import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyDto;
+import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyDTO;
 import com.rocketseat.gestao_vagas.modules.company.repositories.CompanyRepository;
 import com.rocketseat.gestao_vagas.providers.JWTProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AuthCompanyUseCase {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String execute(AuthCompanyDto authCompanyDto) throws AuthenticationException {
+    public String execute(AuthCompanyDTO authCompanyDto) throws AuthenticationException {
         var company = this.companyRepository
                 .findByUsername(authCompanyDto.getUsername())
                 .orElseThrow(() -> new AuthenticationException("Credenciais incorretas."));

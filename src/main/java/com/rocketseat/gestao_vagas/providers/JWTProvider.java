@@ -29,6 +29,7 @@ public class JWTProvider {
         token = token.replace("Bearer ", "");
 
         this.algorithm = Algorithm.HMAC256(companySecretKey);
+        System.out.println(this.algorithm);
 
         return JWT.require(algorithm).build().verify(token);
     }

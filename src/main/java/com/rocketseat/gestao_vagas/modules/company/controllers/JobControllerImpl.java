@@ -1,6 +1,6 @@
 package com.rocketseat.gestao_vagas.modules.company.controllers;
 
-import com.rocketseat.gestao_vagas.modules.company.dto.CreateJobDto;
+import com.rocketseat.gestao_vagas.modules.company.dto.CreateJobDTO;
 import com.rocketseat.gestao_vagas.modules.company.entities.JobEntity;
 import com.rocketseat.gestao_vagas.modules.company.use_cases.CreateJobUseCase;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ public class JobControllerImpl implements JobController {
     private CreateJobUseCase createJobUseCase;
 
     @Override
-    public JobEntity create(CreateJobDto createJobDto, HttpServletRequest request) {
+    public JobEntity create(CreateJobDTO createJobDto, HttpServletRequest request) {
         var companyId = request.getAttribute("company_id");
 
         var jobEntity = JobEntity.builder()

@@ -1,16 +1,13 @@
 package com.rocketseat.gestao_vagas.modules.candidate.controllers;
 
-import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDto;
-import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDto;
-import com.rocketseat.gestao_vagas.modules.candidate.use_cases.AuthCandidateUseCase;
+import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
+import com.rocketseat.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.naming.AuthenticationException;
 
@@ -19,5 +16,5 @@ import javax.naming.AuthenticationException;
 public interface AuthCandidateController {
     @PostMapping("/candidate")
     @Operation(summary = "Autenticação do candidadto")
-    ResponseEntity<AuthCandidateResponseDto> auth(@RequestBody AuthCandidateRequestDto authCandidateRequestDto) throws AuthenticationException ;
+    ResponseEntity<AuthCandidateResponseDTO> auth(@RequestBody AuthCandidateRequestDTO authCandidateRequestDto) throws AuthenticationException ;
 }

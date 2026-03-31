@@ -1,6 +1,6 @@
 package com.rocketseat.gestao_vagas.modules.company.controllers;
 
-import com.rocketseat.gestao_vagas.modules.company.dto.CreateJobDto;
+import com.rocketseat.gestao_vagas.modules.company.dto.CreateJobDTO;
 import com.rocketseat.gestao_vagas.modules.company.entities.JobEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,5 +28,5 @@ public interface JobController {
             })
     })
     @SecurityRequirement(name = "jwt_auth")
-    JobEntity create(@Valid @RequestBody CreateJobDto createJobDto, HttpServletRequest request);
+    JobEntity create(@Valid @RequestBody CreateJobDTO createJobDto, HttpServletRequest request);
 }

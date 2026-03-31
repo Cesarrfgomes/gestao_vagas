@@ -12,7 +12,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetCandidateProfileResponseDto {
+public class GetCandidateProfileResponseDTO {
     private UUID id;
 
     @Schema(example = "Cesar")

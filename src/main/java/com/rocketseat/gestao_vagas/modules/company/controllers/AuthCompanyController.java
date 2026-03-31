@@ -1,7 +1,7 @@
 package com.rocketseat.gestao_vagas.modules.company.controllers;
 
-import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyDto;
-import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyResponseDto;
+import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyDTO;
+import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -18,5 +18,5 @@ public interface AuthCompanyController {
 
     @PostMapping("/company")
     @Operation(summary = "Autenticação de empresa")
-    ResponseEntity<AuthCompanyResponseDto> auth(@RequestBody AuthCompanyDto authCompanyDto) throws AuthenticationException;
+    ResponseEntity<AuthCompanyResponseDTO> auth(@RequestBody AuthCompanyDTO authCompanyDto) throws AuthenticationException;
 }

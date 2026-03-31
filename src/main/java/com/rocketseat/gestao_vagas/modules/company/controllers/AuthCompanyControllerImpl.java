@@ -1,7 +1,7 @@
 package com.rocketseat.gestao_vagas.modules.company.controllers;
 
-import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyDto;
-import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyResponseDto;
+import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyDTO;
+import com.rocketseat.gestao_vagas.modules.company.dto.AuthCompanyResponseDTO;
 import com.rocketseat.gestao_vagas.modules.company.use_cases.AuthCompanyUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,9 @@ public class AuthCompanyControllerImpl implements AuthCompanyController{
     private AuthCompanyUseCase authCompanyUseCase;
 
     @Override
-    public ResponseEntity<AuthCompanyResponseDto> auth(AuthCompanyDto authCompanyDto) throws AuthenticationException {
+    public ResponseEntity<AuthCompanyResponseDTO> auth(AuthCompanyDTO authCompanyDto) throws AuthenticationException {
         String token = this.authCompanyUseCase.execute(authCompanyDto);
 
-        return ResponseEntity.ok(new AuthCompanyResponseDto(token));
+        return ResponseEntity.ok(new AuthCompanyResponseDTO(token));
     }
 }
