@@ -14,5 +14,5 @@ spring:
 security:
   token:
     secret:
-      company: ${SECRET_KEY_COMPANY}
-      candidate: ${SECRET_KEY_CANDIDATE}
+      company: "minhasenhasecreta"
+      candidate: "minhasenhasegura"

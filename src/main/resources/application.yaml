@@ -14,3 +14,6 @@ security:
     secret:
       company: ${SECRET_KEY_COMPANY}
       candidate: ${SECRET_KEY_CANDIDATE}
+
+token:
+  sonar: sqp_99f3f724b53ebc717aa5499d854bf62b3dfb141c
